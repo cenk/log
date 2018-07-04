@@ -1,4 +1,4 @@
-// Package logging is an alternative to log package in standard library.
+// Package log is an alternative to log package in standard library.
 package log
 
 import "os"
@@ -14,6 +14,22 @@ const (
 	INFO
 	DEBUG
 )
+
+func (l Level) String() string {
+	names := map[Level]string{
+		CRITICAL: "CRITICAL",
+		ERROR:    "ERROR",
+		WARNING:  "WARNING",
+		NOTICE:   "NOTICE",
+		INFO:     "INFO",
+		DEBUG:    "DEBUG",
+	}
+	s, ok := names[l]
+	if !ok {
+		return "UNKNOWN"
+	}
+	return s
+}
 
 var (
 	DefaultLogger    Logger    = NewLogger(procName)

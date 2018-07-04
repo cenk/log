@@ -12,14 +12,5 @@ type defaultFormatter struct{}
 
 // Format outputs a message like "2014-02-28 18:15:57 [example] INFO     something happened"
 func (f defaultFormatter) Format(rec *Record) string {
-	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, LevelNames[rec.Level], rec.Message)
-}
-
-var LevelNames = map[Level]string{
-	CRITICAL: "CRITICAL",
-	ERROR:    "ERROR",
-	WARNING:  "WARNING",
-	NOTICE:   "NOTICE",
-	INFO:     "INFO",
-	DEBUG:    "DEBUG",
+	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, rec.Level, rec.Message)
 }
