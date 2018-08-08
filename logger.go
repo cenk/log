@@ -86,7 +86,7 @@ func (l *logger) log(level Level, message string) {
 		return
 	}
 
-	_, file, line, ok := runtime.Caller(l.calldepth + 3)
+	_, file, line, ok := runtime.Caller(l.calldepth + 2)
 	if !ok {
 		file = "???"
 		line = 0
