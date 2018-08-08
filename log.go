@@ -38,6 +38,10 @@ var (
 	DefaultFormatter Formatter = defaultFormatter{}
 )
 
+func init() {
+	DefaultLogger.SetCallDepth(1)
+}
+
 ///////////////////
 //               //
 // DefaultLogger //

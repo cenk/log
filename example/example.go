@@ -2,11 +2,17 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
+	"strconv"
 
 	"github.com/cenkalti/log"
 )
 
 func main() {
+
+	// Use custom formatter for these examples
+	log.DefaultHandler.SetFormatter(exampleFormatter)
+	log.DefaultFormatter = exampleFormatter
 
 	// Default logger
 	log.Debug("Debug")
@@ -40,7 +46,7 @@ func main() {
 	l2.Critical("Critical")
 }
 
-// Adds prefix to log messages
+// MyHandler adds prefix to log messages
 type MyHandler struct {
 	*log.BaseHandler
 	prefix string
@@ -62,3 +68,16 @@ func (h *MyHandler) Handle(rec *log.Record) {
 }
 
 func (h *MyHandler) Close() error { return nil }
+
+type logFormatter struct{}
+
+func (f logFormatter) Format(rec *log.Record) string {
+	return fmt.Sprintf("%s %-8s [%s] %-8s %s",
+		fmt.Sprint(rec.Time)[:19],
+		rec.Level,
+		rec.LoggerName,
+		filepath.Base(rec.Filename)+":"+strconv.Itoa(rec.Line),
+		rec.Message)
+}
+
+var exampleFormatter = &logFormatter{}
